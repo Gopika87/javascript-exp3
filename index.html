@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>JavaScript Basics Assessment</title>
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            margin: 0;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        h1 {
+            color: #e74c3c;
+            text-align: center;
+            margin-bottom: 50px;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 5px #000;
+        }
+
+        .card {
+            background-color: #34495e;
+            border-radius: 15px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            color: #1abc9c;
+            margin-bottom: 20px;
+            font-size: 24px;
+            border-bottom: 2px solid #16a085;
+            padding-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-top: 15px;
+            color: #ecf0f1;
+        }
+
+        input, button {
+            padding: 15px;
+            border-radius: 8px;
+            border: none;
+            margin-top: 12px;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        input {
+            background-color: #7f8c8d;
+            color: #ecf0f1;
+        }
+
+        button {
+            background-color: #e74c3c;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #c0392b;
+            transform: scale(1.05);
+        }
+
+        p {
+            font-size: 18px;
+            margin-top: 20px;
+            background-color: #1abc9c;
+            color: #34495e;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .flex-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .flex-row input {
+            width: 80px;
+            flex-grow: 1;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>JavaScript Basics Assessment</h1>
+
+    <div class="card">
+        <h2>Task 1: Simple Calculator</h2>
+        <label for="num1">Number 1:</label>
+        <input type="number" id="num1"><br>
+
+        <label for="num2">Number 2:</label>
+        <input type="number" id="num2"><br>
+
+        <label for="operator">Operator (+, -, *, /):</label>
+        <input type="text" id="operator"><br>
+
+        <button onclick="performCalculation()">Calculate</button>
+
+        <p id="calculatorResult"></p>
+    </div>
+
+    <div class="card">
+        <h2>Task 2: Array Operations</h2>
+        <label for="arrayInput">Enter numbers separated by commas:</label>
+        <input type="text" id="arrayInput"><br>
+
+        <button onclick="calculateSumOfEvens()">Calculate Sum of Even Numbers</button>
+
+        <p id="arrayResult"></p>
+    </div>
+
+    <div class="card">
+        <h2>Task 3: Object Manipulation</h2>
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName"><br>
+
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName"><br>
+
+        <div class="flex-row">
+            <label for="age">Age:</label>
+            <input type="number" id="age">
+            <button onclick="incrementAge()">Increment Age</button>
+        </div>
+
+        <button onclick="showPersonInfo()">Show Person Info</button>
+
+        <p id="personResult"></p>
+    </div>
+
+    <script>
+        let ageIncremented = false;
+
+        function performCalculation() {
+            const num1 = parseFloat(document.getElementById('num1').value);
+            const num2 = parseFloat(document.getElementById('num2').value);
+            const operator = document.getElementById('operator').value.trim();
+            let result;
+
+            if (isNaN(num1) || isNaN(num2)) {
+                result = 'Invalid input: Please enter valid numbers.';
+            } else {
+                switch (operator) {
+                    case '+':
+                        result = num1 + num2;
+                        break;
+                    case '-':
+                        result = num1 - num2;
+                        break;
+                    case '*':
+                        result = num1 * num2;
+                        break;
+                    case '/':
+                        result = num2 !== 0 ? num1 / num2 : 'Error: Division by zero is not allowed.';
+                        break;
+                    default:
+                        result = 'Invalid operator: Please use +, -, *, or /.';
+                }
+            }
+
+            document.getElementById('calculatorResult').textContent = 'Result: ' + result;
+        }
+
+        function calculateSumOfEvens() {
+            const input = document.getElementById('arrayInput').value;
+            const numbers = input.split(',').map(Number);
+            let sum = 0;
+
+            for (let i = 0; i < numbers.length; i++) {
+                if (numbers[i] % 2 === 0) {
+                    sum += numbers[i];
+                }
+            }
+
+            document.getElementById('arrayResult').textContent = 'Sum of even numbers: ' + sum;
+        }
+
+        function incrementAge() {
+            ageIncremented = true;
+            const ageInput = document.getElementById('age');
+            ageInput.value = parseInt(ageInput.value) + 1;
+        }
+
+        function showPersonInfo() {
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            let age = parseInt(document.getElementById('age').value);
+
+            const Person = {
+                firstName: firstName,
+                lastName: lastName,
+                age: age,
+                getFullName: function () {
+                    return this.firstName + ' ' + this.lastName;
+                }
+            };
+
+            document.getElementById('personResult').textContent = `Full Name: ${Person.getFullName()}, Age: ${Person.age}`;
+        }
+    </script>
+
+</body>
+
+</html>
